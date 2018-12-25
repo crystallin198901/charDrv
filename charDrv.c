@@ -1,7 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/fs.h>
-#include <cdev.h>
+#include <linux/cdev.h>
 #define REG_MAJ 100
 #define REG_MIN 0
 
@@ -11,7 +11,7 @@ dev_t dev_num;
 
 static int chrdrv_open(struct inode *p,struct file *f)
 {
-  printk(KERN_INFO "chrDrv open function\n);
+  printk(KERN_INFO "chrDrv open function\n");
   return 0;
 }
 
@@ -37,7 +37,7 @@ static int __init chrdrv_init(void)
   }
   else
   {
-    printk(KERN_INFO "failed to register devNum.\n");
+    printk(KERN_INFO "failed to  devNum.\n");
     return -1; 
   } 
   pcdev = kzalloc(sizeof(struct cdev),GFP_KERNEL);
@@ -62,9 +62,9 @@ static void __exit chrdrv_exit(void)
 {
   printk(KERN_INFO "charDrv exit\n");
   cdev_del(pcdev);
-  kfree(pcdev);
-  kfree(pfo);
-  unregister_chrdev_region(dev_num);
+  kzfree(pcdev);
+  kzfree(pfo);
+  unregister_chrdev_region(dev_num,10);
 }
 
 module_init(chrdrv_init);
